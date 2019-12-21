@@ -9,6 +9,9 @@ import shellEscape from 'shell-escape'
 import * as Helpers from './helpers'
 import type { ConfigGiven } from './types'
 
+import log from './log'
+
+var syslog;
 class SSH {
   connection: ?SSH2
   constructor() {
@@ -18,6 +21,7 @@ class SSH {
     const connection = new SSH2()
     this.connection = connection
     return new Promise(function(resolve) {
+      log.transports.file.file=givenConfig.logpath||'';
       resolve(Helpers.normalizeConfig(givenConfig))
     }).then(
       config =>
@@ -146,6 +150,8 @@ class SSH {
       // NOTE: Output piping cd command to hide directory non-existent errors
       command = `cd ${shellEscape([options.cwd])} 1> /dev/null 2> /dev/null; ${command}`
     }
+    log.info('cmd')
+    log.info(command)
     const output = { stdout: [], stderr: [] }
     return new Promise(function(resolve, reject) {
       connection.exec(
@@ -164,6 +170,7 @@ class SSH {
             stream.write(options.stdin)
             stream.end()
           }
+          log.info(output)
           stream.on('close', function(code, signal) {
             resolve({ code, signal, stdout: output.stdout.join('').trim(), stderr: output.stderr.join('').trim() })
           })
@@ -180,6 +187,8 @@ class SSH {
 
     const opts = givenOpts || {}
     const sftp = givenSftp || (await this.requestSFTP())
+    log.info('getfile')
+    log.info(`remoteFile:${remoteFile}, localFile:${localFile}`)
 
     try {
       await new Promise(function(resolve, reject) {

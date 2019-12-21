@@ -1,6 +1,6 @@
 {
-  "name": "node-ssh",
-  "version": "6.0.0",
+  "name": "@jswebfans/node-ssh",
+  "version": "6.0.1",
   "description": "SS2 with Promises",
   "main": "lib/index.js",
   "scripts": {
@@ -31,7 +31,8 @@
     "sb-promisify": "^2.0.1",
     "sb-scandir": "^2.0.0",
     "shell-escape": "^0.2.0",
-    "ssh2": "^0.8.2"
+    "ssh2": "^0.8.2",
+    "electron-log":"4.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
