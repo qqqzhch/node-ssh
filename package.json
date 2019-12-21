@@ -1,6 +1,6 @@
 {
   "name": "@jswebfans/node-ssh",
-  "version": "6.0.1",
+  "version": "6.0.2",
   "description": "SS2 with Promises",
   "main": "lib/index.js",
   "scripts": {

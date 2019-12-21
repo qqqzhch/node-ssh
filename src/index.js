@@ -170,8 +170,16 @@ class SSH {
             stream.write(options.stdin)
             stream.end()
           }
-          log.info(output)
+          
           stream.on('close', function(code, signal) {
+            try {
+              log.info(output.stdout.toString());
+              log.info(output.stderr.toString());
+            } catch (error) {
+            }
+
+            
+
             resolve({ code, signal, stdout: output.stdout.join('').trim(), stderr: output.stderr.join('').trim() })
           })
         }, reject),
